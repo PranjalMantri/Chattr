@@ -5,7 +5,7 @@ export const validateResource =
   (schema: AnyZodObject) =>
   (req: Request, res: Response, next: NextFunction) => {
     try {
-      schema.safeParse({
+      schema.parse({
         body: req.body,
         query: req.query,
         params: req.params,
