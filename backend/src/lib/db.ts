@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-export const connectDB = async () => {
+export const connectDB = async (): Promise<void> => {
   try {
     const mongdb_uri = process.env.MONGODB_URI;
 
@@ -9,9 +9,9 @@ export const connectDB = async () => {
       return;
     }
 
-    const conn = await mongoose.connect(mongdb_uri);
+    await mongoose.connect(mongdb_uri);
     console.log(`Connected to database successfuly`);
-  } catch (error) {
+  } catch (error: any) {
     console.log(
       "Something went wrong while connecting to the database: ",
       error
