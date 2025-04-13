@@ -80,5 +80,11 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 };
 
 export const logout = (req: Request, res: Response): void => {
-  res.send("Signout");
+  try {
+    res.cookie("token", "", { maxAge: 0 });
+    res.status(200).json({ message: "Successfuly logged out user" });
+  } catch (error) {
+    console.log("Error in logout controller: ", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
 };
