@@ -116,3 +116,12 @@ export const updateProfile = async (
     res.status(400).json({ message: "Internal Server Error" });
   }
 };
+
+export const checkAuth = (req: CustomRequest, res: Response): void => {
+  try {
+    res.status(200).json({ user: req.user });
+  } catch (error) {
+    console.log("Something went wrong in checkAuth controller: ", error);
+    res.status(400).json({ message: "Internal Server Error" });
+  }
+};

@@ -5,6 +5,7 @@ import {
   login,
   logout,
   updateProfile,
+  checkAuth,
 } from "../controllers/auth.controller.js";
 import {
   createUserSchema,
@@ -26,5 +27,7 @@ router.put(
   validateResource(updateProfileSchema),
   updateProfile
 );
+
+router.get("/check", protectedRoute, checkAuth);
 
 export default router;
