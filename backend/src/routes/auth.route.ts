@@ -21,12 +21,7 @@ router.post("/signup", validateResource(createUserSchema), signup);
 router.post("/login", validateResource(loginUserSchema), login);
 router.get("/logout", protectedRoute, logout);
 
-router.put(
-  "update-profile",
-  protectedRoute,
-  validateResource(updateProfileSchema),
-  updateProfile
-);
+router.put("/update-profile", protectedRoute, updateProfile);
 
 router.get("/check", protectedRoute, checkAuth);
 
