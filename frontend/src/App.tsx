@@ -10,6 +10,7 @@ import {
 import { useAuthStore } from "./store/useAuthStore";
 import { useEffect } from "react";
 import { Loader } from "lucide-react";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
@@ -49,6 +50,8 @@ function App() {
         ></Route>
         <Route path="/settings" element={<SettingsPage />}></Route>
       </Routes>
+
+      <Toaster />
     </div>
   );
 }
