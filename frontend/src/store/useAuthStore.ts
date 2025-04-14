@@ -9,6 +9,7 @@ interface AuthState {
   isUpdatingProfile: boolean;
   isCheckingAuth: boolean;
   checkAuth: () => Promise<void>;
+  login: (data: any) => Promise<void>;
   signup: (data: any) => Promise<void>;
   logout: () => Promise<void>;
 }
@@ -30,6 +31,19 @@ export const useAuthStore = create<AuthState>((set) => ({
       set({ authUser: null });
     } finally {
       set({ isCheckingAuth: false });
+    }
+  },
+
+  login: async (data: any) => {
+    set({ isLoggingIn: true });
+    try {
+      const res = await axiosInstance.post("/auth/login", data);
+      set({ authUser: res.data });
+      toast.success("Login successful");
+    } catch (error: any) {
+      toast.error(error.response.data.message);
+    } finally {
+      set({ isLoggingIn: false });
     }
   },
 
