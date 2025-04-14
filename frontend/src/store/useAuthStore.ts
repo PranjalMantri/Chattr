@@ -12,6 +12,7 @@ interface AuthState {
   login: (data: any) => Promise<void>;
   signup: (data: any) => Promise<void>;
   logout: () => Promise<void>;
+  updateProfile: (data: any) => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -68,6 +69,19 @@ export const useAuthStore = create<AuthState>((set) => ({
       toast.success("Logout successful");
     } catch (error: any) {
       toast.error(error.response.data.message);
+    }
+  },
+
+  updateProfile: async (data: any) => {
+    set({ isUpdatingProfile: true });
+    try {
+      const res = await axiosInstance.put("/auth/update-profile", data);
+      set({ authUser: res.data.updatedUser });
+      toast.success("Profile Updated Successfuly");
+    } catch (error: any) {
+      toast.error(error.response.data.message);
+    } finally {
+      set({ isUpdatingProfile: false });
     }
   },
 }));
