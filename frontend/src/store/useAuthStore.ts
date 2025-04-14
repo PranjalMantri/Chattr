@@ -10,6 +10,7 @@ interface AuthState {
   isCheckingAuth: boolean;
   checkAuth: () => Promise<void>;
   signup: (data: any) => Promise<void>;
+  logout: () => Promise<void>;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -43,6 +44,16 @@ export const useAuthStore = create<AuthState>((set) => ({
       toast.error(error.response.data.message);
     } finally {
       set({ isSigningUp: false });
+    }
+  },
+
+  logout: async () => {
+    try {
+      await axiosInstance.get("/auth/logout");
+      set({ authUser: null });
+      toast.success("Logout successful");
+    } catch (error: any) {
+      toast.error(error.response.data.message);
     }
   },
 }));
