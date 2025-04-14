@@ -3,6 +3,11 @@ import bcrypt from "bcrypt";
 
 import User from "../models/user.model.ts";
 import { generateToken } from "../lib/utils.ts";
+import cloudinary from "../lib/cloudinary.ts";
+
+interface CustomRequest extends Request {
+  user?: any;
+}
 
 export const signup = async (req: Request, res: Response): Promise<void> => {
   const { email, fullName, password } = req.body;
@@ -36,7 +41,6 @@ export const signup = async (req: Request, res: Response): Promise<void> => {
       });
     } else {
       res.status(400).json({ message: "Invalid user data" });
-      return;
     }
   } catch (error) {
     console.log("Error in signin controller: ", error);
@@ -90,6 +94,25 @@ export const logout = (req: Request, res: Response): void => {
 };
 
 export const updateProfile = async (
-  req: Request,
+  req: CustomRequest,
   res: Response
-): Promise<void> => {};
+): Promise<void> => {
+  const { profilePic } = req.body;
+  try {
+    const userId = req.user._id;
+
+    const uploadedImage = await cloudinary.uploader.upload(profilePic);
+    const updatedUser = await User.findByIdAndUpdate(
+      userId,
+      {
+        profilePic: uploadedImage.secure_url,
+      },
+      { new: true }
+    ).select("-password");
+
+    res.status(200).json({ updatedUser });
+  } catch (error) {
+    console.log("Something went wrong in update profile controller: ", error);
+    res.status(400).json({ message: "Internal Server Error" });
+  }
+};

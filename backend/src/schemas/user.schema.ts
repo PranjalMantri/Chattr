@@ -14,3 +14,9 @@ export const loginUserSchema = z.object({
     password: z.string().min(6),
   }),
 });
+
+export const updateProfileSchema = z.object({
+  body: z.object({
+    profilePic: z.string().min(5),
+  }),
+});
