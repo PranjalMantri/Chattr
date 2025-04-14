@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import User from "../models/user.model.ts";
 import Message from "../models/message.model.ts";
+import cloudinary from "../lib/cloudinary.ts";
 
 interface CustomRequest extends Request {
   user?: any;
@@ -24,7 +25,10 @@ export const getAllUsers = async (
   }
 };
 
-export const getMessages = async (req: CustomRequest, res: Response) => {
+export const getMessages = async (
+  req: CustomRequest,
+  res: Response
+): Promise<void> => {
   try {
     const { id: userToChat } = req.params;
     const myId = req.user._id;
@@ -39,6 +43,35 @@ export const getMessages = async (req: CustomRequest, res: Response) => {
     res.status(200).json(messages);
   } catch (error) {
     console.log("Something went wrong in getMessages controller: ", error);
+    res.status(400).json({ message: "Internal Server Error" });
+  }
+};
+
+export const sendMessage = async (
+  req: CustomRequest,
+  res: Response
+): Promise<void> => {
+  try {
+    const { id: receiverId } = req.params;
+    const senderId = req.user._id;
+    const { text, image } = req.body;
+
+    let imageUrl;
+    if (!image) {
+      const uploadedImage = await cloudinary.uploader.upload(image);
+      imageUrl = uploadedImage.secure_url;
+    }
+
+    const newMessage = await Message.create({
+      senderId,
+      receiverId,
+      text,
+      image: imageUrl,
+    });
+
+    res.status(201).json(newMessage);
+  } catch (error) {
+    console.log("Something went wrong in sendMessage controller: ", error);
     res.status(400).json({ message: "Internal Server Error" });
   }
 };
