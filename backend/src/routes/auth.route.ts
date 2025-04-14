@@ -19,7 +19,7 @@ const router = Router();
 
 router.post("/signup", validateResource(createUserSchema), signup);
 router.post("/login", validateResource(loginUserSchema), login);
-router.post("/logout", protectedRoute, logout);
+router.get("/logout", protectedRoute, logout);
 
 router.put(
   "update-profile",
