@@ -7,10 +7,9 @@ import { connectDB } from "./lib/db.ts";
 
 import authRouter from "./routes/auth.route.ts";
 import messagesRouter from "./routes/message.route.ts";
+import { app, server } from "./lib/socket.ts";
 
 dotenv.config();
-
-const app = express();
 
 app.use(express.json({ limit: "10mb" }));
 app.use(cookieParser());
@@ -25,7 +24,8 @@ app.use("/api/auth", authRouter);
 app.use("/api/messages", messagesRouter);
 
 const PORT = process.env.PORT;
-app.listen(PORT, () => {
+
+server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
   connectDB();
 });
