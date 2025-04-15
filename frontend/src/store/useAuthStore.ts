@@ -8,6 +8,7 @@ interface AuthState {
   isLoggingIn: boolean;
   isUpdatingProfile: boolean;
   isCheckingAuth: boolean;
+  onlineUsers: any[];
   checkAuth: () => Promise<void>;
   login: (data: any) => Promise<void>;
   signup: (data: any) => Promise<void>;
@@ -20,7 +21,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   isSigningUp: false,
   isLoggingIn: false,
   isUpdatingProfile: false,
-
+  onlineUsers: [],
   isCheckingAuth: true,
 
   checkAuth: async () => {
