@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import User from "../models/user.model.ts";
 import Message from "../models/message.model.ts";
 import cloudinary from "../lib/cloudinary.ts";
+import { getReceiverSocketId, io } from "../lib/socket.ts";
 
 interface CustomRequest extends Request {
   user?: any;
@@ -68,6 +69,9 @@ export const sendMessage = async (
       text,
       image: imageUrl,
     });
+
+    const receiverSocketId = getReceiverSocketId(receiverId);
+    io.to(receiverSocketId).emit("newMessage", newMessage);
 
     res.status(201).json(newMessage);
   } catch (error) {
