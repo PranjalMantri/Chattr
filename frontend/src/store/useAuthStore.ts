@@ -108,10 +108,18 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
     console.log("Creating socket");
 
-    const socket = io(BASE_URL);
+    const socket = io(BASE_URL, {
+      query: {
+        userId: authUser._id,
+      },
+    });
     socket.connect();
 
     set({ socket });
+
+    socket.on("getOnlineUsers", (onlineUsers) => {
+      set({ onlineUsers });
+    });
   },
 
   disconnectSocket: () => {
