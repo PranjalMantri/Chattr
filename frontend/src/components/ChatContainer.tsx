@@ -18,6 +18,8 @@ const ChatContainer = () => {
   } = useChatStore();
   const { authUser } = useAuthStore();
 
+  console.log("Chat container was loaded");
+
   const messageEndRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
