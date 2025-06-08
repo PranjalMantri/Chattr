@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import http from "http";
 import { Server as SocketIOServer } from "socket.io";
 import cors from "cors";
+import roomRouter from "./routes/room";
 
 export function createServer() {
   const app = express();
@@ -19,6 +20,8 @@ export function createServer() {
   app.get("/healthcheck", (req: Request, res: Response) => {
     res.status(200).json({ message: "Chattr server is runinng" });
   });
+
+  app.use("/room", roomRouter);
 
   return httpServer;
 }
