@@ -84,7 +84,7 @@ const ChatContainer = () => {
                 </time>
               </div>
               <div className="chat-bubble flex flex-col">
-                {message.content && <p>{message.content}</p>}
+                {message.text && <p>{message.text}</p>}
               </div>
             </div>
           );
