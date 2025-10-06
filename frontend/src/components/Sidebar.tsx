@@ -15,7 +15,9 @@ const Sidebar = () => {
   }, [getUsers]);
 
   const filteredUsers = showOnlineOnly
-    ? users.filter((user) => onlineUsers.includes(user._id))
+    ? users.filter((user) =>
+        onlineUsers.some((onlineUser) => onlineUser.userId === user._id)
+      )
     : users;
 
   if (isUsersLoading) return <SidebarSkeleton />;
@@ -62,10 +64,12 @@ const Sidebar = () => {
             <div className="relative mx-auto lg:mx-0">
               <img
                 src={user.profilePic || "/avatar.png"}
-                alt={user.name}
+                alt={user.fullName}
                 className="size-12 object-cover rounded-full"
               />
-              {onlineUsers.includes(user._id) && (
+              {onlineUsers.some(
+                (onlineUser) => onlineUser.userId === user._id
+              ) && (
                 <span
                   className="absolute bottom-0 right-0 size-3 bg-green-500 
                       rounded-full ring-2 ring-zinc-900"
@@ -77,7 +81,11 @@ const Sidebar = () => {
             <div className="hidden lg:block text-left min-w-0">
               <div className="font-medium truncate">{user.fullName}</div>
               <div className="text-sm text-zinc-400">
-                {onlineUsers.includes(user._id) ? "Online" : "Offline"}
+                {onlineUsers.some(
+                  (onlineUser) => onlineUser.userId === user._id
+                )
+                  ? "Online"
+                  : "Offline"}
               </div>
             </div>
           </button>

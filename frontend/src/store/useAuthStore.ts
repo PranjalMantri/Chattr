@@ -10,7 +10,7 @@ export interface User {
   fullName: string;
   email: string;
   profilePic?: string;
-  createdAt: Date;
+  createdAt?: Date;
 }
 
 export interface OnlineUser {

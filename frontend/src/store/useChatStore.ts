@@ -5,9 +5,9 @@ import { useAuthStore } from "./useAuthStore";
 
 export interface User {
   _id: string;
-  name: string;
+  fullName: string;
   email: string;
-  avatarUrl?: string;
+  profilePic?: string;
 }
 
 export interface Message {
@@ -33,7 +33,7 @@ interface ChatState {
   getUsers: () => Promise<void>;
   getMessages: (userId: string) => Promise<void>;
   sendMessage: (messageData: MessageData) => Promise<void>;
-  setSelectedUser: (selectedUser: User) => void;
+  setSelectedUser: (selectedUser: User | null) => void;
   subscribeToMessages: () => void;
   unsubscribeFromMessages: () => void;
 }
@@ -88,7 +88,7 @@ export const useChatStore = create<ChatState>((set, get) => ({
     }
   },
 
-  setSelectedUser: (selectedUser: User) => {
+  setSelectedUser: (selectedUser: User | null) => {
     set({ selectedUser });
   },
 
