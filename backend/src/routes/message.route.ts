@@ -1,13 +1,13 @@
 import { Router } from "express";
 
-import { protectedRoute } from "../middlwares/auth.middleware.ts";
+import { protectedRoute } from "../middlwares/auth.middleware.js";
 import {
   getAllUsers,
   getMessages,
   sendMessage,
-} from "../controllers/messages.controller.ts";
-import { validateResource } from "../middlwares/validateResource.middleware.ts";
-import { getMessagesSchema } from "../schemas/messages.schema.ts";
+} from "../controllers/messages.controller.js";
+import { validateResource } from "../middlwares/validateResource.middleware.js";
+import { getMessagesSchema } from "../schemas/messages.schema.js";
 
 const router = Router();
 

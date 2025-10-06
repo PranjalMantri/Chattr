@@ -11,9 +11,9 @@ import {
   createUserSchema,
   loginUserSchema,
   updateProfileSchema,
-} from "../schemas/user.schema.ts";
-import { validateResource } from "../middlwares/validateResource.middleware.ts";
-import { protectedRoute } from "../middlwares/auth.middleware.ts";
+} from "../schemas/user.schema.js";
+import { validateResource } from "../middlwares/validateResource.middleware.js";
+import { protectedRoute } from "../middlwares/auth.middleware.js";
 
 const router = Router();
 

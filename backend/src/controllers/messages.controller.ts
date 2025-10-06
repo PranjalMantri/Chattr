@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import User from "../models/user.model.ts";
-import Message from "../models/message.model.ts";
-import cloudinary from "../lib/cloudinary.ts";
-import { getReceiverSocketId, io } from "../lib/socket.ts";
+import User from "../models/user.model.js";
+import Message from "../models/message.model.js";
+import cloudinary from "../lib/cloudinary.js";
+import { getReceiverSocketId, io } from "../lib/socket.js";
 
 interface CustomRequest extends Request {
   user?: any;

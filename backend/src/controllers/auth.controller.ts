@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 
-import User from "../models/user.model.ts";
-import { generateToken } from "../lib/utils.ts";
-import cloudinary from "../lib/cloudinary.ts";
+import User from "../models/user.model.js";
+import { generateToken } from "../lib/utils.js";
+import cloudinary from "../lib/cloudinary.js";
 
 interface CustomRequest extends Request {
   user?: any;
