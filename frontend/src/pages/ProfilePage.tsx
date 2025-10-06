@@ -4,7 +4,7 @@ import { useAuthStore } from "../store/useAuthStore";
 
 const ProfilePage = () => {
   const { authUser, updateProfile, isUpdatingProfile } = useAuthStore();
-  const [selectedImg, setSelectedImg] = useState<String | ArrayBuffer | null>(
+  const [selectedImg, setSelectedImg] = useState<string | ArrayBuffer | null>(
     null
   );
 
@@ -22,7 +22,7 @@ const ProfilePage = () => {
     reader.onload = async () => {
       const base64Image = reader.result;
       setSelectedImg(base64Image);
-      updateProfile({ profilePic: base64Image });
+      updateProfile({ profilePic: base64Image as string });
     };
   }
 
@@ -40,7 +40,10 @@ const ProfilePage = () => {
           <div className="flex flex-col items-center gap-4">
             <div className="relative">
               <img
-                src={selectedImg || authUser.profilePic || "/avatar.png"}
+                src={
+                  (typeof selectedImg === "string" ? selectedImg : null) ||
+                  (authUser?.profilePic as string)
+                }
                 alt="Profile"
                 className="size-32 rounded-full object-cover border-4 "
               />
@@ -101,7 +104,7 @@ const ProfilePage = () => {
             <div className="space-y-3 text-sm">
               <div className="flex items-center justify-between py-2 border-b border-zinc-700">
                 <span>Member Since</span>
-                <span>{authUser.createdAt?.split("T")[0]}</span>
+                <span>{authUser?.createdAt?.toString().split("T")[0]}</span>
               </div>
               <div className="flex items-center justify-between py-2">
                 <span>Account Status</span>
