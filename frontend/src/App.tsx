@@ -1,12 +1,6 @@
 import Navbar from "./components/Navbar";
 import { Routes, Route } from "react-router-dom";
-import {
-  HomePage,
-  SignupPage,
-  LoginPage,
-  ProfilePage,
-  SettingsPage,
-} from "./pages";
+import { HomePage, SignupPage, LoginPage, ProfilePage } from "./pages";
 import { useAuthStore } from "./store/useAuthStore";
 import { useEffect } from "react";
 import { Loader } from "lucide-react";
@@ -55,12 +49,6 @@ function App() {
           path="/profile"
           element={
             authUser ? <ProfilePage /> : <Navigate to="/login" replace />
-          }
-        />
-        <Route
-          path="/settings"
-          element={
-            authUser ? <SettingsPage /> : <Navigate to="/login" replace />
           }
         />
       </Routes>
