@@ -18,8 +18,6 @@ const ChatContainer = () => {
   } = useChatStore();
   const { authUser } = useAuthStore();
 
-  console.log("Chat container was loaded");
-
   const messageEndRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -84,6 +82,13 @@ const ChatContainer = () => {
                 </time>
               </div>
               <div className="chat-bubble flex flex-col">
+                {message.image && (
+                  <img
+                    src={message.image}
+                    alt="Attachment"
+                    className="sm:max-w-[200px] rounded-md mb-2"
+                  />
+                )}
                 {message.text && <p>{message.text}</p>}
               </div>
             </div>

@@ -15,7 +15,7 @@ export interface Message {
   senderId: string;
   receiverId: string;
   text?: string;
-  imageUrl?: string;
+  image?: string;
   createdAt: string;
   updatedAt?: string;
 }
