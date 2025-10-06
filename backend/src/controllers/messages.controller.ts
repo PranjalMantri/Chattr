@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import User from "../models/user.model.js";
 import Message from "../models/message.model.js";
 import cloudinary from "../lib/cloudinary.js";
-import { getReceiverSocketId, io } from "../lib/socket.js";
+import { getReceiverSocketIds, io } from "../lib/socket.js";
 
 interface CustomRequest extends Request {
   user?: any;
@@ -70,8 +70,11 @@ export const sendMessage = async (
       image: imageUrl,
     });
 
-    const receiverSocketId = getReceiverSocketId(receiverId);
-    io.to(receiverSocketId).emit("newMessage", newMessage);
+    const receiverSocketIds = getReceiverSocketIds(receiverId);
+
+    if (receiverSocketIds) {
+      io.to(Array.from(receiverSocketIds)).emit("newMessage", newMessage);
+    }
 
     res.status(201).json(newMessage);
   } catch (error) {
