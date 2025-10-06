@@ -13,11 +13,6 @@ export interface User {
   createdAt?: Date;
 }
 
-export interface OnlineUser {
-  userId: string;
-  socketId: string;
-}
-
 export interface LoginData {
   email: string;
   password: string;
@@ -31,7 +26,7 @@ interface AuthState {
   isLoggingIn: boolean;
   isUpdatingProfile: boolean;
   isCheckingAuth: boolean;
-  onlineUsers: OnlineUser[];
+  onlineUsers: string[];
   socket: Socket | null;
   checkAuth: () => Promise<void>;
   login: (data: LoginData) => Promise<void>;
@@ -126,10 +121,10 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   },
 
   connectSocket: () => {
-    console.log("Connect socket was called");
     const { authUser } = get();
+
     if (!authUser || get().socket?.connected) return;
-    console.log("Creating socket");
+
     const socket: Socket = io(BASE_URL, {
       query: {
         userId: authUser._id,
@@ -137,7 +132,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     });
     socket.connect();
     set({ socket });
-    socket.on("getOnlineUsers", (onlineUsers: OnlineUser[]) => {
+    socket.on("getOnlineUsers", (onlineUsers: string[]) => {
       set({ onlineUsers });
     });
   },

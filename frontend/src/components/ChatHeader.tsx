@@ -24,8 +24,7 @@ const ChatHeader = () => {
           <div>
             <h3 className="font-medium">{selectedUser?.fullName}</h3>
             <p className="text-sm text-base-content/70">
-              {selectedUser?._id &&
-              onlineUsers.some((user) => user.userId === selectedUser._id)
+              {selectedUser?._id && onlineUsers.includes(selectedUser._id)
                 ? "Online"
                 : "Offline"}
             </p>
